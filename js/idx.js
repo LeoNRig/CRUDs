@@ -16,7 +16,7 @@ function fecharModal(fecharModal){
 function entrar() {
     var nome = document.querySelector("#nome").value;
     var senha = document.querySelector("#senha").value;
-
+  
     // Verifica as credenciais do usuário
     if (nome === nomeSalvo && senha === senhaSalva) {
       // Redireciona o usuário para a página do calendário
