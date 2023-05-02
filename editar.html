@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="estilo.css">
+    <title>Editar</title>
+  </head>
+  <body>
+    <div class = "logo">
+        <img class = logoImg src="Ensalamento logo.png">
+      </div>
+    <h1 id="edittitle">Editar Aula</h1>
+    <form id="editarForm">
+      <label for="curso">Curso:</label>
+      <input type="text" id="curso" name="curso" required>
+      <br>
+      <label for="periodo">Período:</label>
+      <input type="text" id="periodo" name="periodo" required>
+      <br>
+      <label for="desafio">Desafio:</label>
+      <input type="text" id="desafio" name="desafio" required>
+      <br>
+      <label for="sala">Sala:</label>
+      <input type="text" id="sala" name="sala" required>
+      <br>
+      <label for="professor">Professor:</label>
+      <input type="text" id="professor" name="professor" required>
+      <br>
+      <label for="horario">Horário:</label>
+      <input type="text" id="horario" name="horario" required>
+      <br>
+      <button type="submit" id="Esalvar">Salvar</button>
+      <button type="button" id="Ebtn"onclick="window.history.back()">Cancelar</button>
+    </form>
+
+    <script>
+      const form = document.getElementById('editarForm');
+      const key = new URLSearchParams(window.location.search).get('key');
+      const dados = JSON.parse(localStorage.getItem(key));
+      
+      document.getElementById('curso').value = dados.curso;
+      document.getElementById('periodo').value = dados.periodo;
+      document.getElementById('desafio').value = dados.desafio;
+      document.getElementById('sala').value = dados.sala;
+      document.getElementById('professor').value = dados.professor;
+      document.getElementById('horario').value = dados.horario;
+      
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        
+        const dadosAtualizados = {
+          curso: form.elements.curso.value,
+          periodo: form.elements.periodo.value,
+          desafio: form.elements.desafio.value,
+          sala: form.elements.sala.value,
+          professor: form.elements.professor.value,
+          horario: form.elements.horario.value,
+        };
+        
+        localStorage.setItem(key, JSON.stringify(dadosAtualizados));
+        
+        alert('Dados atualizados com sucesso!');
+        window.location.href = 'calendario.html';
+      });
+    </script>
+  </body>
+</html>
