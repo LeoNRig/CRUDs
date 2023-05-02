@@ -1,0 +1,80 @@
+const cells = document.querySelectorAll('.cell');
+const cursoInput = document.getElementById('curso');
+const periodoInput = document.getElementById('periodo');
+const desafioInput = document.getElementById('desafio');
+const salaInput = document.getElementById('sala');
+const professorInput = document.getElementById('professor');
+const horarioInput = document.getElementById('horario');
+
+// seleciona o botão "Listar aulas salvas"
+const listarBtn = document.getElementById('listarBtn');
+
+// seleciona o modal e a div onde será exibido o conteúdo
+const listaModal = document.getElementById('ListarModal');
+const corpoModal = document.querySelector('.corpoM');
+
+// adiciona um listener de click ao botão "Listar aulas salvas"
+listarBtn.addEventListener('click', () => {
+    // exibe o modal
+    listaModal.style.display = 'block';
+  
+    // seleciona a div onde será exibido o conteúdo do localStorage
+    const corpoModal = document.querySelector(".corpoM");
+  
+    // limpa o conteúdo da div
+    corpoModal.innerHTML = "";
+  
+    // cria uma tabela
+    const tabela = document.createElement("table");
+  
+    // cria a linha do cabeçalho da tabela
+    const cabecalho = tabela.createTHead().insertRow();
+    cabecalho.insertCell().textContent = "Curso";
+    cabecalho.insertCell().textContent = "Período";
+    cabecalho.insertCell().textContent = "Desafio";
+    cabecalho.insertCell().textContent = "Sala";
+    cabecalho.insertCell().textContent = "Professor";
+    cabecalho.insertCell().textContent = "Horário";
+    //cabecalho.insertCell().textContent = "";
+    // preenche a tabela com os dados do localStorage
+    for (let i = 0; i < localStorage.length; i++) {
+        const chave = localStorage.key(i);
+        const dados = JSON.parse(localStorage.getItem(chave));
+      
+        const linha = tabela.insertRow();
+        linha.insertCell().textContent = dados.curso;
+        linha.insertCell().textContent = dados.periodo;
+        linha.insertCell().textContent = dados.desafio;
+        linha.insertCell().textContent = dados.sala;
+        linha.insertCell().textContent = dados.professor;
+        linha.insertCell().textContent = dados.horario;
+      
+        // adiciona o botão de remover
+        const removerBtn = document.createElement('button');
+        removerBtn.textContent = 'X';
+        removerBtn.classList.add('btn-remover');
+        removerBtn.addEventListener('click', () => {
+          localStorage.removeItem(chave); // remove o item do localStorage
+          linha.remove(); // remove a linha da tabela
+        });
+        const colunaRemover = linha.insertCell(); // adiciona a célula da coluna de remover
+        colunaRemover.appendChild(removerBtn); // adiciona o botão na célula
+      
+        // adiciona o botão de editar
+        const editarBtn = document.createElement('button');
+        editarBtn.textContent = 'Editar';
+        editarBtn.classList.add('editar-button');
+        editarBtn.addEventListener('click', () => {
+          // redireciona o usuário para a página de edição, passando a chave do item como parâmetro
+          window.location.href = 'editar.html?key=' + chave;
+        });
+        const colunaEditar = linha.insertCell(); // adiciona a célula da coluna de editar
+        colunaEditar.appendChild(editarBtn); // adiciona o botão na célula
+      }
+
+
+
+    // adiciona a tabela ao corpo do modal
+    corpoModal.appendChild(tabela);
+  });
+  
